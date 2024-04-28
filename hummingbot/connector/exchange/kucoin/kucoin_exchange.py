@@ -238,7 +238,9 @@ class KucoinExchange(ExchangePyBase):
             limit_id=CONSTANTS.DELETE_ORDER_LIMIT_ID
         )
         response_param = "orderId" if self.domain == "hft" else "cancelledOrderIds"
-        if tracked_order.exchange_order_id in cancel_result["data"].get(response_param, []):
+        if "data" not in cancel_result or tracked_order.exchange_order_id in cancel_result["data"].get(
+            response_param, []
+        ):
             return True
         return False
 
